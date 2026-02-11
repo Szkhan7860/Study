@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,9 @@
     <title>PharmMentor - B.Pharm Study Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+      // Process shim for browser environment
+      window.process = window.process || { env: {} };
+      
       tailwind.config = {
         darkMode: 'class',
         theme: {
@@ -41,13 +45,28 @@
             animation: typing-bounce 1.4s infinite ease-in-out both;
         }
         
-        .academic-text h2, .academic-text h3 {
+        .academic-text h3 {
             line-height: 1.4;
         }
         .academic-text br {
             content: "";
             display: block;
             margin: 0.75rem 0;
+        }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #e2e8f0;
+          border-radius: 10px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #334155;
         }
     </style>
 <script type="importmap">
@@ -57,13 +76,15 @@
     "react": "https://esm.sh/react@19.0.0",
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
   }
 }
 </script>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
     <div id="root"></div>
+    <!-- Bootstrapping the React App -->
+    <script type="module" src="index.tsx"></script>
 </body>
 </html>

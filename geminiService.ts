@@ -16,9 +16,16 @@ const SYSTEM_PROMPT = `
   You must return the response as a valid JSON object matching the provided schema exactly.
 `;
 
+const getApiKey = () => {
+  const key = process.env.API_KEY;
+  if (!key) {
+    console.warn("API Key is missing. Ensure process.env.API_KEY is configured.");
+  }
+  return key || "";
+};
+
 export async function generateStudyNotes(prefs: UserPreferences): Promise<StudyNotes> {
-  // Lazy initialization of AI client using mandatory environment variable
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: getApiKey() });
   
   const userPrompt = `
     Subject: ${prefs.subject}
@@ -91,8 +98,7 @@ export async function generateStudyNotes(prefs: UserPreferences): Promise<StudyN
 }
 
 export async function analyzePharmacyImage(base64Image: string, mimeType: string): Promise<string> {
-  // Lazy initialization of AI client using mandatory environment variable
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: getApiKey() });
   
   const prompt = `
     Analyze this pharmacy academic image. IDENTIFY correctly and PROVIDE academic context.
@@ -138,8 +144,7 @@ export async function analyzePharmacyImage(base64Image: string, mimeType: string
 }
 
 export function createPharmacyChatSession(): any {
-  // Lazy initialization of AI client using mandatory environment variable
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: getApiKey() });
   
   return ai.chats.create({
     model: 'gemini-3-pro-preview',
